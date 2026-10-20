@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Northstar Bank | Prototype</title>
+<title>Northstar Bank</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,sans-serif;background:#f3f6fb;color:#17233b}
@@ -61,15 +61,14 @@ footer{text-align:center;color:#8a94a6;font-size:11px;padding:35px 15px}
 <header>
   <div>
     <div class="brand">✦ Northstar<span> Bank</span></div>
-    <div class="tag">PROTOTYPE INTERFACE</div>
   </div>
-  <div id="headright" style="font-size:13px">Prototype Session</div>
+  <div id="headright" style="font-size:13px">Active Session</div>
 </header>
 
 <main>
 <section id="login" class="login">
   <h1>Sign In</h1>
-  <p>Access your prototype dashboard.</p>
+  <p>Access your account dashboard.</p>
   <form id="loginform">
     <label for="username">Username</label>
     <input id="username" autocomplete="username" placeholder="Enter username" required>
@@ -295,7 +294,7 @@ function logout() {
   el('dashboard').classList.add('hidden');
   el('login').classList.remove('hidden');
   el('password').value = '';
-  el('headright').textContent = 'Prototype Session';
+  el('headright').textContent = 'Active Session';
 }
 </script>
 </body>
