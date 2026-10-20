@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Northstar Bank | Prototype</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f6fb;color:#17233b}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.proto-banner{background:#3b82f6;color:#ffffff;text-align:center;padding:9px;font-size:12px;font-weight:bold;letter-spacing:0.5px}
+header{background:#101f39;color:white;padding:20px 6%;display:flex;align-items:center;justify-content:space-between}
+.brand{font-size:22px;font-weight:bold;letter-spacing:-.5px}
+.brand span{color:#67a5ff}
+.tag{font-size:10px;color:#a8bad6;margin-top:5px;letter-spacing:1px}
+main{max-width:1050px;margin:35px auto;padding:0 20px}
+.login{max-width:420px;margin:60px auto;background:white;padding:32px;border-radius:18px;box-shadow:0 8px 35px #18345b12}
+h1{font-size:25px;margin:0 0 10px}
+p{color:#748097;line-height:1.5}
+label{display:block;font-size:13px;font-weight:bold;margin:15px 0 6px}
+input,select{width:100%;padding:13px;border:1px solid #d9e0eb;border-radius:9px;outline-color:#3979db;background:#fff}
+.primary{width:100%;background:#2563eb;color:white;border:0;border-radius:9px;padding:14px;margin-top:20px;font-weight:bold}
+.primary:hover{background:#174fc5}
+.hidden{display:none!important}
+.topline{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:25px;flex-wrap:wrap}
+.pill{background:#e0f2e9;color:#14774a;padding:7px 11px;border-radius:20px;font-size:11px}
+.balance{background:linear-gradient(120deg,#142747,#2456a0);color:white;border-radius:18px;padding:28px;margin-bottom:22px}
+.balance .muted{color:#c2d7fa;font-size:13px}
+.amount{font-size:36px;font-weight:bold;margin:13px 0}
+.account{font-size:13px;color:#d4e2f8}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+.actions button{background:#ffffff20;color:white;border:1px solid #ffffff40;border-radius:9px;padding:11px 15px}
+.actions button:hover{background:#ffffff35}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin:20px 0}
+.stat,.panel{background:white;border:1px solid #e8edf5;border-radius:14px;padding:20px}
+.stat small{color:#7a879c}
+.stat h2{margin:12px 0 0;font-size:20px}
+.panel h3{margin-top:0;font-size:17px}
+.tx{display:flex;align-items:center;gap:12px;padding:15px 0;border-bottom:1px solid #edf0f5}
+.tx:last-child{border-bottom:0}
+.circle{width:40px;height:40px;background:#eef3fc;border-radius:50%;display:grid;place-items:center;font-size:16px}
+.txinfo{flex:1}
+.txinfo b{display:block;font-size:14px}
+.txinfo small{display:block;color:#7a879c;margin-top:5px}
+.money{font-weight:bold;font-size:14px;white-space:nowrap}
+.positive{color:#12804c}
+.negative{color:#26344a}
+.grid2{display:grid;grid-template-columns:1.4fr 1fr;gap:18px}
+footer{text-align:center;color:#8a94a6;font-size:11px;padding:35px 15px}
+.modal{position:fixed;inset:0;background:#101f3980;display:grid;place-items:center;padding:18px}
+.modalbox{background:white;border-radius:16px;padding:25px;width:min(420px,100%)}
+.modalhead{display:flex;justify-content:space-between;align-items:center}
+.close{border:0;background:#edf1f7;border-radius:50%;width:32px;height:32px}
+.msg{font-size:13px;margin-top:14px;color:#2857a4;text-align:center}
+@media(max-width:650px){.cards{grid-template-columns:1fr}.grid2{grid-template-columns:1fr}.amount{font-size:30px}main{margin:22px auto}.login{margin:30px auto;padding:24px}}
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="brand">✦ Northstar<span> Bank</span></div>
+    <div class="tag">PROTOTYPE INTERFACE</div>
+  </div>
+  <div id="headright" style="font-size:13px">Prototype Session</div>
+</header>
+
+<main>
+<section id="login" class="login">
+  <h1>Sign In</h1>
+  <p>Access your prototype dashboard.</p>
+  <form id="loginform">
+    <label for="username">Username</label>
+    <input id="username" autocomplete="username" placeholder="Enter username" required>
+    <label for="password">Password</label>
+    <input id="password" type="password" autocomplete="off" placeholder="Enter password" required>
+    <button class="primary" type="submit">Sign In →</button>
+  </form>
+</section>
+
+<section id="dashboard" class="hidden">
+  <div class="topline">
+    <div>
+      <h1 id="greeting">Welcome back</h1>
+      <p style="margin-bottom:0">Account Overview</p>
+    </div>
+    <span class="pill">● Active Account</span>
+  </div>
+
+  <div class="balance">
+    <div class="muted">TOTAL COMBINED BALANCE</div>
+    <div class="amount" id="balance">$3,791</div>
+    <div class="account">Checking · •••• 4821</div>
+    <div class="actions">
+      <button onclick="openModal('deposit')">↓ Deposit</button>
+      <button onclick="openModal('withdraw')">↑ Withdraw</button>
+      <button onclick="openModal('transfer')">⇄ Transfer</button>
+      <button onclick="openModal('details')">Account Details</button>
+    </div>
+  </div>
+
+  <div class="cards">
+    <div class="stat"><small>Checking Account</small><h2 id="checking">$3,791</h2></div>
+    <div class="stat"><small>Savings Account</small><h2 id="savings">$0</h2></div>
+    <div class="stat"><small>Total Transactions</small><h2 id="count">1</h2></div>
+  </div>
+
+  <div class="grid2">
+    <div class="panel">
+      <h3>Recent Transactions</h3>
+      <div id="transactions">
+
+        <div class="tx"><div class="circle">💲</div><div class="txinfo"><b>Freecash</b><small>Oct 9 · General</small></div><div class="money positive">$3791</div></div>
+      </div>
+    </div>
+    <div class="panel">
+      <h3>Account Details</h3>
+      <p style="font-size:13px">Account Type<br><b style="color:#26344a">Checking & Savings</b></p>
+      <p style="font-size:13px">Account Number<br><b style="color:#26344a">•••• •••• 4821</b></p>
+      <p style="font-size:13px">Routing Number<br><b style="color:#26344a">121000358</b></p>
+      <p style="font-size:13px">Status<br><b style="color:#168253">Active</b></p>
+      <button class="primary" onclick="openModal('details')">View Full Details</button>
+    </div>
+  </div>
+  <button class="primary" style="max-width:180px;background:#fff;color:#26344a;border:1px solid #dce3ed;margin-top:25px;" onclick="logout()">Sign Out</button>
+</section>
+</main>
+
+<footer>Northstar Bank</footer>
+
+<div id="modal" class="modal hidden">
+  <div class="modalbox">
+    <div class="modalhead"><h3 id="modaltitle">Action</h3><button class="close" onclick="closeModal()">✕</button></div>
+    <div id="modalcontent"></div>
+  </div>
+</div>
+
+<script>
+let checking = 3791;
+let savings = 0;
+let transactions = 1;
+
+const money = n => n.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+const el = id => document.getElementById(id);
+
+el('loginform').addEventListener('submit', e => {
+  e.preventDefault();
+  const username = el('username').value.trim();
+  if(!username) return;
+  el('login').classList.add('hidden');
+  el('dashboard').classList.remove('hidden');
+  el('headright').textContent = 'User: ' + username;
+  el('greeting').textContent = 'Welcome back, ' + username;
+});
+
+function update() {
+  el('balance').textContent = money(checking + savings);
+  el('checking').textContent = money(checking);
+  el('savings').textContent = money(savings);
+  el('count').textContent = transactions;
+}
+
+function openModal(type) {
+  el('modal').classList.remove('hidden');
+  const title = el('modaltitle'), content = el('modalcontent');
+  
+  if (type === 'deposit') {
+    title.textContent = 'Deposit Funds';
+    content.innerHTML = `
+      <label>Deposit To</label>
+      <select id="targetaccount">
+        <option value="checking">Checking (•••• 4821)</option>
+        <option value="savings">Savings (•••• 9012)</option>
+      </select>
+      <label>Amount (USD)</label>
+      <input id="actionamount" type="number" min="0.01" step="0.01" placeholder="0.00">
+      <button class="primary" onclick="processDeposit()">Confirm Deposit</button>
+      <div id="feedback" class="msg"></div>
+    `;
+  } else if (type === 'withdraw') {
+    title.textContent = 'Withdraw Funds';
+    content.innerHTML = `
+      <label>Withdraw From</label>
+      <select id="sourceaccount">
+        <option value="checking">Checking (${money(checking)})</option>
+        <option value="savings">Savings (${money(savings)})</option>
+      </select>
+      <label>Amount (USD)</label>
+      <input id="actionamount" type="number" min="0.01" step="0.01" placeholder="0.00">
+      <button class="primary" onclick="processWithdraw()">Confirm Withdrawal</button>
+      <div id="feedback" class="msg"></div>
+    `;
+  } else if (type === 'transfer') {
+    title.textContent = 'Transfer Funds';
+    content.innerHTML = `
+      <label>Transfer Direction</label>
+      <select id="transferdir">
+        <option value="c2s">Checking to Savings</option>
+        <option value="s2c">Savings to Checking</option>
+      </select>
+      <label>Amount (USD)</label>
+      <input id="actionamount" type="number" min="0.01" step="0.01" placeholder="0.00">
+      <button class="primary" onclick="processTransfer()">Confirm Transfer</button>
+      <div id="feedback" class="msg"></div>
+    `;
+  } else {
+    title.textContent = 'Account Details';
+    content.innerHTML = `
+      <p><b>Checking Account:</b> •••• 4821</p>
+      <p><b>Savings Account:</b> •••• 9012</p>
+      <p><b>Routing Number:</b> 121000358</p>
+      <p><b>Account Holder:</b> Elisha Samson</p>
+    `;
+  }
+}
+
+function closeModal() { el('modal').classList.add('hidden'); }
+function feedback(text) { const f = el('feedback'); if(f) f.textContent = text; }
+
+function getAmount() {
+  const a = Number(el('actionamount').value);
+  return Number.isFinite(a) && a > 0 ? Math.round(a * 100) / 100 : 0;
+}
+
+function processDeposit() {
+  const amt = getAmount();
+  if (!amt) return feedback('Please enter a valid amount.');
+  
+  const target = el('targetaccount').value;
+  if (target === 'checking') checking += amt;
+  else savings += amt;
+  
+  transactions++;
+  update();
+  addTxRecord('＋', `Deposit to ${target}`, 'Just now · Deposit', amt, true);
+  feedback('Deposit successful.');
+  setTimeout(closeModal, 1200);
+}
+
+function processWithdraw() {
+  const amt = getAmount();
+  if (!amt) return feedback('Please enter a valid amount.');
+  
+  const source = el('sourceaccount').value;
+  if (source === 'checking' && amt > checking) return feedback('Insufficient checking funds.');
+  if (source === 'savings' && amt > savings) return feedback('Insufficient savings funds.');
+  
+  if (source === 'checking') checking -= amt;
+  else savings -= amt;
+  
+  transactions++;
+  update();
+  addTxRecord('−', `Withdrawal from ${source}`, 'Just now · Withdrawal', amt, false);
+  feedback('Withdrawal successful.');
+  setTimeout(closeModal, 1200);
+}
+
+function processTransfer() {
+  const amt = getAmount();
+  if (!amt) return feedback('Please enter a valid amount.');
+  
+  const dir = el('transferdir').value;
+  if (dir === 'c2s') {
+    if (amt > checking) return feedback('Insufficient funds in Checking.');
+    checking -= amt;
+    savings += amt;
+    addTxRecord('⇄', 'Transfer to Savings', 'Just now · Internal Transfer', amt, false);
+  } else {
+    if (amt > savings) return feedback('Insufficient funds in Savings.');
+    savings -= amt;
+    checking += amt;
+    addTxRecord('⇄', 'Transfer to Checking', 'Just now · Internal Transfer', amt, true);
+  }
+  
+  transactions++;
+  update();
+  feedback('Transfer completed.');
+  setTimeout(closeModal, 1200);
+}
+
+function addTxRecord(icon, title, subtitle, amountVal, isPositive) {
+  const sign = isPositive ? '+' : '−';
+  const cls = isPositive ? 'positive' : 'negative';
+  const html = `
+    <div class="tx">
+      <div class="circle">${icon}</div>
+      <div class="txinfo"><b>${title}</b><small>${subtitle}</small></div>
+      <div class="money ${cls}">${sign}${money(amountVal)}</div>
+    </div>`;
+  el('transactions').insertAdjacentHTML('afterbegin', html);
+}
+
+function logout() {
+  el('dashboard').classList.add('hidden');
+  el('login').classList.remove('hidden');
+  el('password').value = '';
+  el('headright').textContent = 'Prototype Session';
+}
+</script>
+</body>
+</html>
